@@ -435,23 +435,23 @@
         
         .controls-row {
             display: flex;
-            gap: 16px;
+            gap: 20px;
             flex-wrap: wrap;
             align-items: center;
             justify-content: center;
         }
         
         .btn {
-            padding: 12px 24px;
+            padding: 16px 32px;
             border: none;
-            border-radius: 12px;
+            border-radius: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            font-size: 14px;
+            font-size: 16px;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
             text-decoration: none;
             white-space: nowrap;
             position: relative;
@@ -476,39 +476,41 @@
         .btn-primary {
             background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
             color: white;
-            box-shadow: var(--shadow-md);
+            box-shadow: var(--shadow-lg);
         }
         
         .btn-primary:hover {
             background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-xl);
         }
         
         .btn-secondary {
-            background: var(--surface-color);
+            background: var(--glass-bg);
             color: var(--text-primary);
             border: 1px solid var(--glass-border);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-md);
         }
         
         .btn-secondary:hover {
             background: var(--surface-hover);
-            border-color: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
+            border-color: var(--glass-border);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
         }
         
         .btn-success {
             background: linear-gradient(135deg, var(--success-color), #047857);
             color: white;
-            box-shadow: var(--shadow-md);
+            box-shadow: var(--shadow-lg);
         }
         
         .btn-success:hover {
             background: linear-gradient(135deg, #047857, var(--success-color));
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-xl);
         }
         
         .btn-warning {
@@ -543,15 +545,16 @@
         
         .search-input {
             width: 100%;
-            padding: 12px 16px 12px 44px;
+            padding: 16px 20px 16px 48px;
             border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            background: var(--surface-color);
+            border-radius: 16px;
+            background: var(--glass-bg);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             color: var(--text-primary);
-            font-size: 14px;
+            font-size: 16px;
             transition: all 0.3s ease;
+            box-shadow: var(--shadow-md);
         }
         
         .search-input::placeholder {
@@ -562,35 +565,36 @@
             outline: none;
             border-color: var(--primary-color);
             background: var(--surface-hover);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1), var(--shadow-lg);
         }
         
         .search-icon {
             position: absolute;
-            left: 16px;
+            left: 20px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-muted);
-            font-size: 16px;
+            font-size: 18px;
         }
         
         .filter-select {
-            padding: 12px 16px;
+            padding: 16px 20px;
             border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            background: var(--surface-color);
+            border-radius: 16px;
+            background: var(--glass-bg);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             color: var(--text-primary);
-            font-size: 14px;
+            font-size: 16px;
             cursor: pointer;
             transition: all 0.3s ease;
+            box-shadow: var(--shadow-md);
         }
         
         .filter-select:focus {
             outline: none;
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1), var(--shadow-lg);
         }
         
         .filter-select option {
@@ -1066,6 +1070,8 @@
             .btn {
                 width: 100%;
                 justify-content: center;
+                padding: 14px 24px;
+                font-size: 15px;
             }
         }
         
