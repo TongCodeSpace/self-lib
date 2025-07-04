@@ -333,11 +333,28 @@
         .page-title {
             font-size: clamp(2rem, 4vw, 2.5rem);
             font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .page-title-icon {
+            /* 保持图标原生彩色，不受主题变换影响 */
+            color: initial;
+            -webkit-text-fill-color: initial;
+            background: none;
+            filter: none;
+            flex-shrink: 0;
+        }
+        
+        .page-title-text {
+            /* 文字使用渐变效果 */
             background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 12px;
         }
         
         .page-subtitle {
@@ -864,7 +881,10 @@
     <main class="main-content">
         <!-- 页面头部 -->
         <div class="page-header">
-            <h1 class="page-title">📊 阅读统计</h1>
+                            <h1 class="page-title">
+                    <span class="page-title-icon">📊</span>
+                    <span class="page-title-text"> 阅读统计</span>
+                </h1>
             <p class="page-subtitle">
                 深入了解你的阅读习惯，发现阅读趋势，制定更好的阅读计划
             </p>
@@ -982,7 +1002,7 @@
         <div class="theme-toggle-icon moon">🌙</div>
     </button>
 
-    <script src="app.js?v=2025.07.05.0048"></script>
+    <script src="app.js?v=2025.07.05.0050"></script>
     
     <script>
         // 导航栏滚动效果
