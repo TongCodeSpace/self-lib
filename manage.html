@@ -339,15 +339,32 @@
         .page-title {
             font-size: clamp(1.8rem, 4vw, 2.5rem);
             font-weight: 700;
+            margin: 0 0 24px 0;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .page-title-icon {
+            /* 保持图标原生彩色，不受主题变换影响 */
+            color: initial;
+            -webkit-text-fill-color: initial;
+            background: none;
+            filter: none;
+            flex-shrink: 0;
+        }
+        
+        .page-title-text {
+            /* 文字使用渐变效果 */
             background: linear-gradient(135deg, 
                 var(--text-primary) 0%, 
                 var(--text-secondary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin: 0 0 24px 0;
-            letter-spacing: -0.01em;
-            line-height: 1.2;
         }
         
         .stats {
@@ -1312,7 +1329,10 @@
         <!-- 页面头部 -->
         <div class="page-header">
             <div class="header-content">
-                <h1 class="page-title">📚 书籍管理</h1>
+                <h1 class="page-title">
+                    <span class="page-title-icon">📚</span>
+                    <span class="page-title-text"> 书籍管理</span>
+                </h1>
                 <div class="stats">
                     <div class="stat-item">
                         <div class="stat-number" id="totalBooks">0</div>
@@ -1502,7 +1522,7 @@
         <div class="theme-toggle-icon moon">🌙</div>
     </button>
 
-    <script src="app.js?v=2025.07.05.0045"></script>
+    <script src="app.js?v=2025.07.05.0048"></script>
     
     <script>
         // 导航栏滚动效果
