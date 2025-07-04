@@ -1482,6 +1482,28 @@
                 
                 <div class="form-row">
                     <div class="form-group">
+                        <label class="form-label" for="bookPublisher">出版社</label>
+                        <input type="text" id="bookPublisher" class="form-input" placeholder="出版社名称">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="bookPublishDate">出版日期</label>
+                        <input type="date" id="bookPublishDate" class="form-input">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="bookPages">页数</label>
+                        <input type="number" id="bookPages" class="form-input" placeholder="总页数" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="bookPrice">价格</label>
+                        <input type="text" id="bookPrice" class="form-input" placeholder="购买价格（可选）">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
                         <label class="form-label" for="startDate">开始阅读日期</label>
                         <input type="date" id="startDate" class="form-input">
                     </div>
@@ -1497,8 +1519,19 @@
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label" for="bookCover">封面URL</label>
+                    <label class="form-label" for="bookCover">封面图片</label>
                     <input type="url" id="bookCover" class="form-input" placeholder="书籍封面图片链接">
+                    <div style="margin-top: 8px; display: flex; gap: 8px; align-items: center;">
+                        <span style="font-size: 14px; color: var(--text-muted);">或</span>
+                        <label class="btn btn-secondary btn-small" for="coverUpload">
+                            <span>📁</span>
+                            上传封面
+                        </label>
+                        <input type="file" id="coverUpload" style="display: none;" accept="image/*" onchange="handleCoverUpload(event)">
+                    </div>
+                    <div id="coverPreview" style="margin-top: 8px; display: none;">
+                        <img id="previewImage" style="max-width: 100px; max-height: 120px; border-radius: 8px; box-shadow: var(--shadow-sm);" alt="封面预览">
+                    </div>
                 </div>
                 
                 <div class="form-group">
@@ -1522,7 +1555,7 @@
         <div class="theme-toggle-icon moon">🌙</div>
     </button>
 
-    <script src="app.js?v=2025.07.05.0050"></script>
+    <script src="app.js?v=2025.07.05.0057"></script>
     
     <script>
         // 导航栏滚动效果

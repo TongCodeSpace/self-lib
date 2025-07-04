@@ -31,6 +31,7 @@ class ReadingRecordApp {
                 publisher: book.publisher || '',
                 publishDate: book.publishDate || '',
                 pages: book.pages || '',
+                price: book.price || '',
                 coverUrl: book.coverUrl || '',
                 quotes: book.quotes || [],
                 tags: book.tags || []
@@ -121,11 +122,12 @@ class ReadingRecordApp {
         const status = document.getElementById('bookStatus').value;
         const description = document.getElementById('bookDescription').value.trim();
         const location = document.getElementById('bookLocation')?.value.trim() || '';
-        const isbn = document.getElementById('bookISBN')?.value.trim() || '';
+        const isbn = document.getElementById('bookIsbn')?.value.trim() || '';
         const publisher = document.getElementById('bookPublisher')?.value.trim() || '';
         const publishDate = document.getElementById('bookPublishDate')?.value || '';
         const pages = document.getElementById('bookPages')?.value || '';
-        const coverUrl = document.getElementById('bookCoverUrl')?.value.trim() || '';
+        const price = document.getElementById('bookPrice')?.value.trim() || '';
+        const coverUrl = document.getElementById('bookCover')?.value.trim() || '';
         const tagsInput = document.getElementById('bookTags')?.value.trim() || '';
         const tags = this.parseTags(tagsInput);
 
@@ -145,6 +147,7 @@ class ReadingRecordApp {
             publisher,
             publishDate,
             pages,
+            price,
             coverUrl,
             rating: 0,
             startDate: '',
@@ -171,8 +174,8 @@ class ReadingRecordApp {
         this.renderBooks();
         this.updateStats();
         this.updateTagFilter();
-        this.closeModal('addBookModal');
-        this.resetForm('addBookForm');
+        this.closeModal('bookModal');
+        this.resetForm('bookForm');
         this.showMessage('书籍添加成功！', 'success');
     }
 
@@ -185,11 +188,12 @@ class ReadingRecordApp {
         const description = document.getElementById('editBookDescription').value.trim();
         const location = document.getElementById('editBookLocation')?.value.trim() || '';
         const rating = parseInt(document.getElementById('editBookRating')?.value) || 0;
-        const isbn = document.getElementById('editBookISBN')?.value.trim() || '';
+        const isbn = document.getElementById('editBookIsbn')?.value.trim() || '';
         const publisher = document.getElementById('editBookPublisher')?.value.trim() || '';
         const publishDate = document.getElementById('editBookPublishDate')?.value || '';
         const pages = document.getElementById('editBookPages')?.value || '';
-        const coverUrl = document.getElementById('editBookCoverUrl')?.value.trim() || '';
+        const price = document.getElementById('editBookPrice')?.value.trim() || '';
+        const coverUrl = document.getElementById('editBookCover')?.value.trim() || '';
         const tagsInput = document.getElementById('editBookTags')?.value.trim() || '';
         const tags = this.parseTags(tagsInput);
 
@@ -213,6 +217,7 @@ class ReadingRecordApp {
             book.publisher = publisher;
             book.publishDate = publishDate;
             book.pages = pages;
+            book.price = price;
             book.coverUrl = coverUrl;
             book.tags = tags;
             book.updatedAt = new Date().toISOString();
@@ -231,7 +236,7 @@ class ReadingRecordApp {
             this.renderBooks();
             this.updateStats();
             this.updateTagFilter();
-            this.closeModal('editBookModal');
+            this.closeModal('bookModal');
             this.showMessage('书籍更新成功！', 'success');
         }
     }
@@ -570,8 +575,15 @@ class ReadingRecordApp {
     }
 
     openAddBookModal() {
-        this.resetForm('addBookForm');
-        this.openModal('addBookModal');
+        this.currentEditingBook = null;
+        this.resetForm('bookForm');
+        this.hideCoverPreview();
+        
+        // 更新模态框标题
+        document.getElementById('modalTitle').textContent = '添加书籍';
+        document.getElementById('saveButtonText').textContent = '保存';
+        
+        this.openModal('bookModal');
     }
 
     openEditBookModal(bookId) {
@@ -579,39 +591,36 @@ class ReadingRecordApp {
         if (!book) return;
 
         this.currentEditingBook = bookId;
-        document.getElementById('editBookTitle').value = book.title;
-        document.getElementById('editBookAuthor').value = book.author;
-        document.getElementById('editBookStatus').value = book.status;
-        document.getElementById('editBookDescription').value = book.description || '';
         
-        // 新增字段
-        if (document.getElementById('editBookLocation')) {
-            document.getElementById('editBookLocation').value = book.location || '';
-        }
-        if (document.getElementById('editBookRating')) {
-            document.getElementById('editBookRating').value = book.rating || 0;
-        }
-        if (document.getElementById('editBookISBN')) {
-            document.getElementById('editBookISBN').value = book.isbn || '';
-        }
-        if (document.getElementById('editBookPublisher')) {
-            document.getElementById('editBookPublisher').value = book.publisher || '';
-        }
-        if (document.getElementById('editBookPublishDate')) {
-            document.getElementById('editBookPublishDate').value = book.publishDate || '';
-        }
-        if (document.getElementById('editBookPages')) {
-            document.getElementById('editBookPages').value = book.pages || '';
-        }
-        if (document.getElementById('editBookCoverUrl')) {
-            document.getElementById('editBookCoverUrl').value = book.coverUrl || '';
-        }
-        if (document.getElementById('editBookTags')) {
-            document.getElementById('editBookTags').value = book.tags ? book.tags.join(', ') : '';
-            this.updateTagsPreview('editTagsPreview', book.tags ? book.tags.join(', ') : '');
+        // 填充基本信息
+        document.getElementById('bookTitle').value = book.title;
+        document.getElementById('bookAuthor').value = book.author;
+        document.getElementById('bookStatus').value = book.status;
+        document.getElementById('bookDescription').value = book.description || '';
+        
+        // 填充详细信息
+        document.getElementById('bookLocation').value = book.location || '';
+        document.getElementById('bookRating').value = book.rating || '';
+        document.getElementById('bookIsbn').value = book.isbn || '';
+        document.getElementById('bookPublisher').value = book.publisher || '';
+        document.getElementById('bookPublishDate').value = book.publishDate || '';
+        document.getElementById('bookPages').value = book.pages || '';
+        document.getElementById('bookPrice').value = book.price || '';
+        document.getElementById('bookCover').value = book.coverUrl || '';
+        document.getElementById('bookTags').value = book.tags ? book.tags.join(', ') : '';
+        
+        // 显示封面预览
+        if (book.coverUrl) {
+            this.showCoverPreview(book.coverUrl);
+        } else {
+            this.hideCoverPreview();
         }
         
-        this.openModal('editBookModal');
+        // 更新模态框标题
+        document.getElementById('modalTitle').textContent = '编辑书籍';
+        document.getElementById('saveButtonText').textContent = '更新';
+        
+        this.openModal('bookModal');
     }
 
     openAddRecordModal(bookId) {
@@ -628,9 +637,9 @@ class ReadingRecordApp {
 
     // ISBN 自动获取功能
     async fetchBookByISBN() {
-        const isbnInput = document.getElementById('bookISBN');
+        const isbnInput = document.getElementById('bookIsbn');
         const statusDiv = document.getElementById('isbnStatus');
-        const fetchBtn = document.getElementById('fetchISBNBtn');
+        const fetchBtn = document.querySelector('button[onclick="fetchBookInfo()"]');
         
         const isbn = isbnInput.value.trim().replace(/[-\s]/g, ''); // 移除连字符和空格
         
@@ -650,19 +659,32 @@ class ReadingRecordApp {
         this.showISBNStatus('正在获取书籍信息...', 'loading');
 
         try {
-            // 首先尝试 OpenLibrary API
-            let bookData = await this.fetchFromOpenLibrary(isbn);
+            let bookData = null;
             
-            // 如果 OpenLibrary 没有找到，尝试 Google Books API
-            if (!bookData) {
-                bookData = await this.fetchFromGoogleBooks(isbn);
+            // 尝试多个数据源
+            const dataSources = [
+                { name: 'Google Books', fetch: () => this.fetchFromGoogleBooks(isbn) },
+                { name: 'OpenLibrary', fetch: () => this.fetchFromOpenLibrary(isbn) }
+            ];
+            
+            for (const source of dataSources) {
+                this.showISBNStatus(`🔍 正在从 ${source.name} 获取信息...`, 'loading');
+                try {
+                    bookData = await source.fetch();
+                    if (bookData) {
+                        this.showISBNStatus(`✅ 成功从 ${source.name} 获取书籍信息！`, 'success');
+                        break;
+                    }
+                } catch (sourceError) {
+                    console.warn(`${source.name} 查询失败:`, sourceError);
+                    continue;
+                }
             }
 
             if (bookData) {
                 this.fillBookForm(bookData);
-                this.showISBNStatus('✅ 书籍信息获取成功！', 'success');
             } else {
-                this.showISBNStatus('❌ 未找到该ISBN的书籍信息', 'error');
+                this.showISBNStatus('❌ 所有数据源都未找到该ISBN的书籍信息', 'error');
             }
         } catch (error) {
             console.error('获取书籍信息失败:', error);
@@ -729,7 +751,7 @@ class ReadingRecordApp {
         const publisherInput = document.getElementById('bookPublisher');
         const publishDateInput = document.getElementById('bookPublishDate');
         const pagesInput = document.getElementById('bookPages');
-        const coverUrlInput = document.getElementById('bookCoverUrl');
+        const coverUrlInput = document.getElementById('bookCover');
         const descriptionInput = document.getElementById('bookDescription');
 
         if (!titleInput.value && bookData.title) {
@@ -753,6 +775,8 @@ class ReadingRecordApp {
         }
         if (!coverUrlInput.value && bookData.coverUrl) {
             coverUrlInput.value = bookData.coverUrl;
+            // 显示封面预览
+            this.showCoverPreview(bookData.coverUrl);
         }
         if (!descriptionInput.value && bookData.description) {
             // 清理HTML标签
@@ -762,12 +786,50 @@ class ReadingRecordApp {
     }
 
     showISBNStatus(message, type) {
-        const statusDiv = document.getElementById('isbnStatus');
-        if (statusDiv) {
-            statusDiv.textContent = message;
-            statusDiv.style.color = type === 'success' ? '#52c41a' : 
-                                   type === 'error' ? '#ff4d4f' : 
-                                   type === 'loading' ? '#1890ff' : '#666';
+        // 创建或更新状态显示
+        let statusDiv = document.getElementById('isbnStatus');
+        if (!statusDiv) {
+            statusDiv = document.createElement('div');
+            statusDiv.id = 'isbnStatus';
+            statusDiv.style.cssText = `
+                margin-top: 8px;
+                padding: 8px 12px;
+                border-radius: 6px;
+                font-size: 14px;
+                font-weight: 500;
+                display: none;
+            `;
+            const isbnInput = document.getElementById('bookIsbn');
+            if (isbnInput && isbnInput.parentNode) {
+                isbnInput.parentNode.insertBefore(statusDiv, isbnInput.nextSibling);
+            }
+        }
+        
+        statusDiv.textContent = message;
+        statusDiv.className = `isbn-status ${type}`;
+        
+        // 设置样式
+        if (type === 'success') {
+            statusDiv.style.background = '#f6ffed';
+            statusDiv.style.color = '#52c41a';
+            statusDiv.style.border = '1px solid #b7eb8f';
+        } else if (type === 'error') {
+            statusDiv.style.background = '#fff2f0';
+            statusDiv.style.color = '#ff4d4f';
+            statusDiv.style.border = '1px solid #ffccc7';
+        } else if (type === 'loading') {
+            statusDiv.style.background = '#f0f9ff';
+            statusDiv.style.color = '#1890ff';
+            statusDiv.style.border = '1px solid #91d5ff';
+        }
+        
+        statusDiv.style.display = 'block';
+        
+        // 成功或错误消息3秒后自动隐藏
+        if (type === 'success' || type === 'error') {
+            setTimeout(() => {
+                statusDiv.style.display = 'none';
+            }, 3000);
         }
     }
 
@@ -942,6 +1004,53 @@ class ReadingRecordApp {
     }
 
     // 消息提示
+    // 封面上传和预览功能
+    handleCoverUpload(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        // 验证文件类型
+        if (!file.type.startsWith('image/')) {
+            this.showMessage('请选择图片文件', 'error');
+            return;
+        }
+
+        // 验证文件大小 (5MB)
+        if (file.size > 5 * 1024 * 1024) {
+            this.showMessage('图片文件不能超过5MB', 'error');
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const dataUrl = e.target.result;
+            document.getElementById('bookCover').value = dataUrl;
+            this.showCoverPreview(dataUrl);
+            this.showMessage('封面上传成功！', 'success');
+        };
+        reader.onerror = () => {
+            this.showMessage('封面上传失败', 'error');
+        };
+        reader.readAsDataURL(file);
+    }
+
+    showCoverPreview(imageUrl) {
+        const preview = document.getElementById('coverPreview');
+        const previewImage = document.getElementById('previewImage');
+        
+        if (preview && previewImage && imageUrl) {
+            previewImage.src = imageUrl;
+            preview.style.display = 'block';
+        }
+    }
+
+    hideCoverPreview() {
+        const preview = document.getElementById('coverPreview');
+        if (preview) {
+            preview.style.display = 'none';
+        }
+    }
+
     showMessage(message, type = 'info') {
         // 简单的消息提示实现
         const messageEl = document.createElement('div');
@@ -995,6 +1104,35 @@ function importData() {
 
 function handleImport(event) {
     app.handleImport(event);
+}
+
+function fetchBookInfo() {
+    app.fetchBookByISBN();
+}
+
+function searchBooks() {
+    app.renderBooks();
+}
+
+function showAddBookModal() {
+    app.openAddBookModal();
+}
+
+function closeBookModal() {
+    app.closeModal('bookModal');
+}
+
+function saveBook(event) {
+    event.preventDefault();
+    if (app.currentEditingBook) {
+        app.updateBook();
+    } else {
+        app.addBook();
+    }
+}
+
+function handleCoverUpload(event) {
+    app.handleCoverUpload(event);
 }
 
 // 初始化应用
