@@ -1,4 +1,4 @@
-const CACHE_NAME = 'reading-records-v2';
+const CACHE_NAME = 'reading-records-v202507042254';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -18,17 +18,41 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        // 如果在缓存中找到了请求，返回缓存的版本
-        if (response) {
+  // 对于HTML文件，使用Network First策略
+  if (event.request.destination === 'document' || 
+      event.request.url.includes('.html') || 
+      event.request.url.includes('.js') ||
+      event.request.url === location.origin + '/') {
+    event.respondWith(
+      fetch(event.request)
+        .then(response => {
+          // 如果网络请求成功，更新缓存并返回响应
+          if (response.status === 200) {
+            const responseToCache = response.clone();
+            caches.open(CACHE_NAME)
+              .then(cache => {
+                cache.put(event.request, responseToCache);
+              });
+          }
           return response;
-        }
-        return fetch(event.request);
-      }
-    )
-  );
+        })
+        .catch(() => {
+          // 网络请求失败时，返回缓存的版本
+          return caches.match(event.request);
+        })
+    );
+  } else {
+    // 对于其他资源（图片、字体等），使用Cache First策略
+    event.respondWith(
+      caches.match(event.request)
+        .then(response => {
+          if (response) {
+            return response;
+          }
+          return fetch(event.request);
+        })
+    );
+  }
 });
 
 self.addEventListener('activate', event => {
