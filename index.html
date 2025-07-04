@@ -496,7 +496,7 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 32px;
-            align-items: stretch;
+            grid-auto-rows: 1fr;
         }
         
         .feature-card {
@@ -513,8 +513,7 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            min-height: 280px;
+            height: 100%;
         }
         
         .feature-card::before {
@@ -558,10 +557,7 @@
             font-size: 15px;
             color: var(--text-secondary);
             line-height: 1.6;
-            flex-grow: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            margin-top: auto;
         }
         
         /* 动画 */
@@ -580,10 +576,6 @@
         @media (max-width: 1200px) {
             .features-grid {
                 grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .feature-card {
-                min-height: 260px;
             }
         }
         
@@ -618,10 +610,6 @@
                 gap: 24px;
             }
             
-            .feature-card {
-                min-height: 220px;
-            }
-            
             .hero-section {
                 padding: 0 16px;
             }
@@ -647,7 +635,6 @@
             
             .feature-card {
                 padding: 32px 24px;
-                min-height: 200px;
             }
         }
         
