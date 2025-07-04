@@ -474,13 +474,27 @@
         }
         
         .btn-primary {
-            background: linear-gradient(135deg, #6b7280, #4b5563);
+            background: linear-gradient(135deg, #9ca3af, #6b7280);
             color: white;
             box-shadow: var(--shadow-lg);
         }
         
         .btn-primary:hover {
-            background: linear-gradient(135deg, #4b5563, #374151);
+            background: linear-gradient(135deg, #6b7280, #4b5563);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        /* 亮色主题下的主按钮 */
+        [data-theme="light"] .btn-primary {
+            background: linear-gradient(135deg, #e5e7eb, #d1d5db);
+            color: #374151;
+            box-shadow: var(--shadow-lg);
+        }
+        
+        [data-theme="light"] .btn-primary:hover {
+            background: linear-gradient(135deg, #d1d5db, #9ca3af);
+            color: #1f2937;
             transform: translateY(-3px);
             box-shadow: var(--shadow-xl);
         }
@@ -501,14 +515,43 @@
             box-shadow: var(--shadow-lg);
         }
         
+        /* 亮色主题下的次要按钮 */
+        [data-theme="light"] .btn-secondary {
+            background: rgba(255, 255, 255, 0.9);
+            color: #374151;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        [data-theme="light"] .btn-secondary:hover {
+            background: rgba(255, 255, 255, 1);
+            border-color: rgba(0, 0, 0, 0.15);
+            color: #1f2937;
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+        
         .btn-success {
-            background: linear-gradient(135deg, #92400e, #78350f);
+            background: linear-gradient(135deg, #a3a3a3, #737373);
             color: white;
             box-shadow: var(--shadow-lg);
         }
         
         .btn-success:hover {
-            background: linear-gradient(135deg, #78350f, #451a03);
+            background: linear-gradient(135deg, #737373, #525252);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        /* 亮色主题下的成功按钮 */
+        [data-theme="light"] .btn-success {
+            background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+            color: #374151;
+            box-shadow: var(--shadow-lg);
+        }
+        
+        [data-theme="light"] .btn-success:hover {
+            background: linear-gradient(135deg, #e5e7eb, #d1d5db);
+            color: #1f2937;
             transform: translateY(-3px);
             box-shadow: var(--shadow-xl);
         }
@@ -557,14 +600,28 @@
             box-shadow: var(--shadow-md);
         }
         
+        /* 亮色主题下的搜索框 */
+        [data-theme="light"] .search-input {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            color: #374151;
+        }
+        
         .search-input::placeholder {
             color: var(--text-muted);
         }
         
         .search-input:focus {
             outline: none;
-            border-color: #6b7280;
+            border-color: #9ca3af;
             background: var(--surface-hover);
+            box-shadow: 0 0 0 3px rgba(156, 163, 175, 0.1), var(--shadow-lg);
+        }
+        
+        /* 亮色主题下的搜索框焦点 */
+        [data-theme="light"] .search-input:focus {
+            border-color: #6b7280;
+            background: rgba(255, 255, 255, 0.9);
             box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.1), var(--shadow-lg);
         }
         
@@ -591,9 +648,23 @@
             box-shadow: var(--shadow-md);
         }
         
+        /* 亮色主题下的筛选器 */
+        [data-theme="light"] .filter-select {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            color: #374151;
+        }
+        
         .filter-select:focus {
             outline: none;
+            border-color: #9ca3af;
+            box-shadow: 0 0 0 3px rgba(156, 163, 175, 0.1), var(--shadow-lg);
+        }
+        
+        /* 亮色主题下的筛选器焦点 */
+        [data-theme="light"] .filter-select:focus {
             border-color: #6b7280;
+            background: rgba(255, 255, 255, 0.9);
             box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.1), var(--shadow-lg);
         }
         
@@ -892,6 +963,14 @@
         .modal-title {
             font-size: 24px;
             font-weight: 700;
+            background: linear-gradient(135deg, #9ca3af, var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* 亮色主题下的模态框标题 */
+        [data-theme="light"] .modal-title {
             background: linear-gradient(135deg, #6b7280, var(--secondary-color));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -940,14 +1019,39 @@
             font-family: inherit;
         }
         
+        /* 亮色主题下的表单元素 */
+        [data-theme="light"] .form-input,
+        [data-theme="light"] .form-textarea,
+        [data-theme="light"] .form-select {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            color: #374151;
+        }
+        
         .form-input::placeholder, .form-textarea::placeholder {
             color: var(--text-muted);
         }
         
+        /* 亮色主题下的placeholder文字 */
+        [data-theme="light"] .form-input::placeholder,
+        [data-theme="light"] .form-textarea::placeholder,
+        [data-theme="light"] .search-input::placeholder {
+            color: #9ca3af;
+        }
+        
         .form-input:focus, .form-textarea:focus, .form-select:focus {
             outline: none;
-            border-color: #6b7280;
+            border-color: #9ca3af;
             background: var(--surface-hover);
+            box-shadow: 0 0 0 3px rgba(156, 163, 175, 0.1);
+        }
+        
+        /* 亮色主题下的表单元素焦点 */
+        [data-theme="light"] .form-input:focus,
+        [data-theme="light"] .form-textarea:focus,
+        [data-theme="light"] .form-select:focus {
+            border-color: #6b7280;
+            background: rgba(255, 255, 255, 0.9);
             box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.1);
         }
         
